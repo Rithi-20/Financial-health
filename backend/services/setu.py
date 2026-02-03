@@ -61,9 +61,13 @@ class SetuAA:
             import urllib.parse
             safe_name = urllib.parse.quote(company_name)
             token_param = f"&token={auth_token}" if auth_token else ""
+            
+            # Dynamic Frontend URL for Production vs Local
+            frontend_base = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip('/')
+            
             return {
                 "id": f"demo_{uuid.uuid4().hex[:8]}",
-                "url": f"http://localhost:5173/setu_mock.html?name={safe_name}{token_param}"
+                "url": f"{frontend_base}/setu_mock.html?name={safe_name}{token_param}"
             }
 
     def check_consent_status(self, consent_id):
