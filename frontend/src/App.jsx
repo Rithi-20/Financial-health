@@ -8,12 +8,12 @@ function App() {
   const [view, setView] = useState('login'); // 'login', 'signup', 'dashboard'
 
   useEffect(() => {
-    // We check if a token exists, but we don't auto-set the view to dashboard 
-    // to satisfy the requirement: "Whenever the user enter the page it should start with the login page"
+    // Check for existing session
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
+      setView('dashboard'); // Auto-redirect to dashboard if logged in
     }
   }, []);
 
