@@ -8,23 +8,24 @@ function App() {
   const [view, setView] = useState('login'); // 'login', 'signup', 'dashboard'
 
   useEffect(() => {
-    // Check for existing session
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    // Check for existing session in sessionStorage (survives refresh, dies on close)
+    const token = sessionStorage.getItem('token');
+    const storedUser = sessionStorage.getItem('user');
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
-      setView('dashboard'); // Auto-redirect to dashboard if logged in
+      setView('dashboard');
     }
   }, []);
 
   const handleLogin = (userData) => {
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    sessionStorage.setItem('user', JSON.stringify(userData));
     setView('dashboard');
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     setUser(null);
     setView('login');
   };

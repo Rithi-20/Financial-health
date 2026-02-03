@@ -13,7 +13,7 @@ const Login = ({ onLogin, onSwitchToSignup }) => {
         setError('');
         try {
             const data = await login(email, password);
-            localStorage.setItem('token', data.access_token);
+            sessionStorage.setItem('token', data.access_token);
             onLogin(data.user);
         } catch (err) {
             setError(err.response?.data?.detail || 'Login failed');
