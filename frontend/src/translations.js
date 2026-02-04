@@ -55,7 +55,16 @@ export const translations = {
         confidence_intervals: "Confidence Intervals (Best/Worst Case)",
         security_status: "Security & Compliance",
         secured: "Secured",
-        compliant: "Compliant"
+        compliant: "Compliant",
+        // Simplified labels for non-finance users
+        solvency_simple: "Business Safety",
+        solvency_desc: "Is your business safe from closing down?",
+        repayment_simple: "Debt Power",
+        repayment_desc: "Can you easily pay back your loans?",
+        profit_simple: "Actual Take-Home",
+        profit_desc: "Money left in your pocket after all expenses.",
+        liquidity_simple: "Pocket Cash",
+        liquidity_desc: "How much cash do you have for daily needs?"
     },
     hi: {
         dashboard: "डैशबोर्ड अवलोकन",
@@ -113,6 +122,15 @@ export const translations = {
         confidence_intervals: "विश्वास अंतराल (सर्वश्रेष्ठ/सबसे खराब स्थिति)",
         security_status: "सुरक्षा और अनुपालन",
         secured: "सुरक्षित",
-        compliant: "अनुपालन"
+        compliant: "अनुपालन",
+        // Simplified labels for non-finance users
+        solvency_simple: "व्यवसाय की सुरक्षा",
+        solvency_desc: "क्या आपका व्यवसाय बंद होने से सुरक्षित है?",
+        repayment_simple: "कर्ज चुकाने की शक्ति",
+        repayment_desc: "क्या आप अपना कर्ज आसानी से चुका सकते हैं?",
+        profit_simple: "वास्तविक कमाई",
+        profit_desc: "सभी खर्चों के बाद आपकी जेब में बचा पैसा।",
+        liquidity_simple: "हाथ में नकदी",
+        liquidity_desc: "दैनिक जरूरतों के लिए आपके पास कितना पैसा है?"
     }
 };

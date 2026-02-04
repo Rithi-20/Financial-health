@@ -32,18 +32,21 @@ const RiskRadar = ({ data, lang = 'en' }) => {
     const risks = [
         {
             title: lang === 'hi' ? 'कैश बर्न रिस्क' : 'Cash Burn Risk',
+            simpleTitle: lang === 'hi' ? 'पैसे की कमी' : 'Low Cash Warning',
             status: data.cash_flow?.burn_rate > data.cash_flow?.inflow ? (lang === 'hi' ? 'क्रिटिकल' : 'Critical') : (lang === 'hi' ? 'स्थिर' : 'Stable'),
-            desc: lang === 'hi' ? 'मासिक आउटफ्लो इनफ्लो से अधिक है।' : 'Monthly outflows exceed inflows.',
+            desc: lang === 'hi' ? 'आपका मासिक खर्च आपकी आय से अधिक है।' : 'Your monthly expenses are higher than your income.',
             severity: data.cash_flow?.burn_rate > data.cash_flow?.inflow ? 'red' : 'green'
         },
         {
             title: lang === 'hi' ? 'ऋण क्षमता' : 'Debt Capacity',
+            simpleTitle: lang === 'hi' ? 'कर्ज लेने की क्षमता' : 'Loan Eligibility',
             status: data.ratios?.dscr > 1.5 ? (lang === 'hi' ? 'मजबूत' : 'Strong') : (lang === 'hi' ? 'सीमित' : 'Limited'),
-            desc: lang === 'hi' ? 'नए ऋण को चुकाने की आपकी क्षमता।' : 'Your ability to service new debt obligations.',
+            desc: t('repayment_desc'),
             severity: data.ratios?.dscr > 1.5 ? 'green' : 'yellow'
         },
         {
             title: lang === 'hi' ? 'कर अनुपालन' : 'Tax Compliance',
+            simpleTitle: lang === 'hi' ? 'सरकारी टैक्स स्थिति' : 'Govt Tax Status',
             status: lang === 'hi' ? 'सक्रिय' : 'Active',
             desc: lang === 'hi' ? 'जीएसटी और आयकर दाखिल करने की स्थिति।' : 'Status of GST and Income Tax filings.',
             severity: 'green'
@@ -97,7 +100,10 @@ const RiskRadar = ({ data, lang = 'en' }) => {
                                 {risks.map((risk, i) => (
                                     <div key={i} className="bg-white/40 border border-white/5 rounded-2xl p-6">
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{risk.title}</span>
+                                            <div>
+                                                <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest block mb-1">{risk.title}</span>
+                                                <span className="text-[11px] text-red-600 font-bold">{risk.simpleTitle}</span>
+                                            </div>
                                             <div className={`w-2 h-2 rounded-full ${risk.severity === 'red' ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]' :
                                                 risk.severity === 'green' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' :
                                                     'bg-yellow-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]'

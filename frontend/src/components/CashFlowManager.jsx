@@ -41,7 +41,10 @@ const CashFlowManager = ({ data, lang = 'en' }) => {
             <div className="mb-12">
                 <div className="flex items-center gap-3 mb-4">
                     <Droplets className="w-5 h-5 text-emerald-600" />
-                    <span className="text-xs font-black text-emerald-700 uppercase tracking-[0.3em]">{t('liquidity_pulse')}</span>
+                    <div>
+                        <span className="text-xs font-black text-emerald-700 uppercase tracking-[0.3em]">{t('liquidity_pulse')}</span>
+                        <span className="ml-3 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">{t('liquidity_simple')}</span>
+                    </div>
                 </div>
                 <h2 className="text-5xl font-black text-gray-900 tracking-tighter leading-tight">
                     {lang === 'hi' ? 'नकद प्रवाह' : 'Cash Flow'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">{lang === 'hi' ? 'इंटेलिजेंस' : 'Intelligence'}</span>

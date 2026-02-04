@@ -309,11 +309,11 @@ const Dashboard = ({ user, onLogout }) => {
                                         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Wallet className="w-5 h-5 text-emerald-600" /> {lang === 'hi' ? 'व्यवसाय स्वास्थ्य' : 'Business Health'}</h3>
                                         <div className="space-y-4">
                                             <div className="flex justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                                <span className="text-sm text-gray-600">{lang === 'hi' ? 'वित्तीय स्थिरता' : 'Financial Stability'}</span>
+                                                <span className="text-sm text-gray-600">{t('solvency_simple')}</span>
                                                 <span className="font-mono font-bold text-gray-900">{data?.health_score?.label || 'Good'}</span>
                                             </div>
                                             <div className="flex justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                                <span className="text-sm text-gray-600">{lang === 'hi' ? 'नेट मार्जिन' : 'Net Margin'}</span>
+                                                <span className="text-sm text-gray-600">{t('profit_simple')}</span>
                                                 <span className={`font-mono font-bold ${data?.ratios?.net_margin >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>{((data?.ratios?.net_margin || 0) * 100).toFixed(1)}%</span>
                                             </div>
                                         </div>

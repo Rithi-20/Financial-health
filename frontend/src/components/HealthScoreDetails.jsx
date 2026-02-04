@@ -67,23 +67,26 @@ const HealthScoreDetails = ({ data, lang = 'en' }) => {
     const components = [
         {
             name: lang === 'hi' ? 'शोधन क्षमता (Z-स्कोर)' : 'Solvency (Z-Score)',
+            simpleName: t('solvency_simple'),
             value: ratios?.z_score?.toFixed(2) || '0.00',
             status: ratios?.z_score > 3 ? (lang === 'hi' ? 'सुरक्षित' : 'Safe') : (lang === 'hi' ? 'सावधानी' : 'Caution'),
-            desc: lang === 'hi' ? 'यही स्कोर आपकी दिवालियापन संभावना को मापता है।' : 'Calculates the probability of bankruptcy.',
+            desc: t('solvency_desc'),
             color: ratios?.z_score > 3 ? 'emerald' : 'orange'
         },
         {
-            name: lang === 'hi' ? 'ऋण सेवा कवरेज' : 'Debt Service Coverage',
+            name: lang === 'hi' ? 'ऋण सेवा (DSCR)' : 'Debt Service (DSCR)',
+            simpleName: t('repayment_simple'),
             value: ratios?.dscr?.toFixed(2) || '0.00',
             status: ratios?.dscr > 1.25 ? (lang === 'hi' ? 'स्वस्थ' : 'Healthy') : (lang === 'hi' ? 'कम' : 'Low'),
-            desc: lang === 'hi' ? 'ऋण चुकाने की आपकी वर्तमान क्षमता।' : 'Current capacity to repay business debt.',
+            desc: t('repayment_desc'),
             color: ratios?.dscr > 1.25 ? 'emerald' : 'red'
         },
         {
             name: lang === 'hi' ? 'शुद्ध लाभ मार्जिन' : 'Net Profit Margin',
+            simpleName: t('profit_simple'),
             value: ((ratios?.net_margin || 0) * 100).toFixed(1) + '%',
             status: ratios?.net_margin > 0.1 ? (lang === 'hi' ? 'अच्छा' : 'Good') : (lang === 'hi' ? 'कम' : 'Low'),
-            desc: lang === 'hi' ? 'खर्चों के बाद हाथ में रहने वाला पैसा।' : 'Profits remaining after all operations.',
+            desc: t('profit_desc'),
             color: ratios?.net_margin > 0.1 ? 'emerald' : 'yellow'
         }
     ];
@@ -111,7 +114,10 @@ const HealthScoreDetails = ({ data, lang = 'en' }) => {
                 {components.map((comp, i) => (
                     <div key={i} className="bg-white border border-gray-200 rounded-[2.5rem] p-8 hover:bg-gray-50 transition-all group shadow-sm">
                         <div className="flex items-center justify-between mb-6">
-                            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{comp.name}</span>
+                            <div>
+                                <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest block mb-1">{comp.name}</span>
+                                <span className="text-xs text-emerald-600 font-bold">{comp.simpleName}</span>
+                            </div>
                             <div className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${comp.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
                                 comp.color === 'orange' ? 'bg-orange-50 text-orange-600' :
                                     comp.color === 'red' ? 'bg-red-50 text-red-600' :
