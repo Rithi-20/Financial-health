@@ -631,7 +631,7 @@ async def download_report(
         
         p.setFont("Helvetica", 10)
         p.setFillColorRGB(0.5, 0.5, 0.5)
-        p.drawString(50, height - 110, f"Analysis Date: 2025-02-04 | User: {user.full_name}")
+        p.drawString(50, height - 110, f"Analysis Date: 2026-02-04 | User: {user.full_name}")
         p.setStrokeColorRGB(0.8, 0.8, 0.8)
         p.line(50, height - 120, width - 50, height - 120)
 
