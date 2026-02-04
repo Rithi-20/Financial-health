@@ -137,6 +137,40 @@ const HealthScoreDetails = ({ data, lang = 'en' }) => {
                 ))}
             </div>
 
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
+                {/* Score Breakdown / Why this Score? */}
+                <div className="lg:col-span-12 bg-white/60 border border-emerald-200 rounded-[3rem] p-10 shadow-2xl backdrop-blur-md">
+                    <div className="flex items-center gap-3 mb-8">
+                        <TrendingUp className="w-6 h-6 text-emerald-600" />
+                        <h3 className="text-2xl font-black text-gray-900 tracking-tighter uppercase">{t('why_this_score')}</h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {data.score_factors?.map((factor, idx) => (
+                            <div key={idx} className={`p-6 rounded-[2rem] border transition-all ${factor.impact === 'positive' ? 'bg-emerald-50/50 border-emerald-100 hover:border-emerald-300' : 'bg-red-50/50 border-red-100 hover:border-red-300'}`}>
+                                <div className="flex items-center gap-3 mb-4">
+                                    {factor.impact === 'positive' ? (
+                                        <div className="p-2 bg-emerald-500 rounded-xl text-white">
+                                            <CheckCircle2 className="w-4 h-4" />
+                                        </div>
+                                    ) : (
+                                        <div className="p-2 bg-red-500 rounded-xl text-white">
+                                            <AlertCircle className="w-4 h-4" />
+                                        </div>
+                                    )}
+                                    <span className={`text-[10px] font-black uppercase tracking-widest ${factor.impact === 'positive' ? 'text-emerald-700' : 'text-red-700'}`}>
+                                        {factor.impact === 'positive' ? t('positive') : t('negative')}
+                                    </span>
+                                </div>
+                                <p className={`text-xs font-bold leading-relaxed ${factor.impact === 'positive' ? 'text-emerald-900' : 'text-red-900'}`}>
+                                    {factor.text}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 {/* Methodology */}
                 <div className="lg:col-span-8 bg-white border border-emerald-200 rounded-[3rem] p-12 shadow-xl relative overflow-hidden group">

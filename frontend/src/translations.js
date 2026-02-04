@@ -46,7 +46,16 @@ export const translations = {
         live_banking_desc: "Securely connect your bank via RBI AA for real-time score updates.",
         connect_bank: "Link Account",
         vua_placeholder: "mobile@setu (VUA ID)",
-        connected: "Sync Active"
+        connected: "Sync Active",
+        score_breakdown: "Score Breakdown",
+        impact: "Impact",
+        positive: "Positive",
+        negative: "Critical",
+        why_this_score: "Why this Score?",
+        confidence_intervals: "Confidence Intervals (Best/Worst Case)",
+        security_status: "Security & Compliance",
+        secured: "Secured",
+        compliant: "Compliant"
     },
     hi: {
         dashboard: "डैशबोर्ड अवलोकन",
@@ -95,6 +104,15 @@ export const translations = {
         live_banking_desc: "रीयल-टाइम स्कोर अपडेट के लिए RBI AA के माध्यम से अपने बैंक को सुरक्षित रूप से कनेक्ट करें।",
         connect_bank: "खाता लिंक करें",
         vua_placeholder: "mobile@setu (VUA ID)",
-        connected: "सिंक सक्रिय"
+        connected: "सिंक सक्रिय",
+        score_breakdown: "स्कोर ब्रेकडाउन",
+        impact: "प्रभाव",
+        positive: "सकारात्मक",
+        negative: "महत्वपूर्ण",
+        why_this_score: "यह स्कोर क्यों?",
+        confidence_intervals: "विश्वास अंतराल (सर्वश्रेष्ठ/सबसे खराब स्थिति)",
+        security_status: "सुरक्षा और अनुपालन",
+        secured: "सुरक्षित",
+        compliant: "अनुपालन"
     }
 };

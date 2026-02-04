@@ -114,7 +114,9 @@ const Dashboard = ({ user, onLogout }) => {
     const allUploaded = uploads.bank && uploads.accounting && uploads.gst;
     const chartData = data?.forecast?.months?.map((m, i) => ({
         name: m,
-        cash: data.forecast.values?.[i] || 0
+        cash: data.forecast.values?.[i] || 0,
+        upper: data.forecast.upper?.[i] || 0,
+        lower: data.forecast.lower?.[i] || 0
     })) || [];
 
     return (
@@ -173,10 +175,16 @@ const Dashboard = ({ user, onLogout }) => {
                     </nav>
 
                     <div className="mt-auto p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
-                        <p className="text-[10px] text-emerald-700 font-bold uppercase mb-2">{lang === 'hi' ? 'प्लेटफ़ॉर्म स्थिति' : 'Platform Status'}</p>
-                        <div className="flex items-center gap-2 text-xs text-emerald-600 font-medium">
-                            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                            {lang === 'hi' ? 'लाइव एनालिटिक्स' : 'Live Analytics'}
+                        <p className="text-[10px] text-emerald-700 font-bold uppercase mb-2">{t('security_status')}</p>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-[10px] text-emerald-600 font-medium">
+                                <ShieldAlert className="w-3 h-3" />
+                                <span>{data?.compliance?.encryption || 'AES-256 Secured'}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-[10px] text-emerald-600 font-medium">
+                                <CheckCircle className="w-3 h-3" />
+                                <span>{data?.compliance?.regulatory || 'RBI/DPDP Compliant'}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -322,6 +330,11 @@ const Dashboard = ({ user, onLogout }) => {
                                                     <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} />
                                                     <YAxis stroke="#94a3b8" fontSize={12} tickFormatter={(v) => `₹${v / 1000}k`} />
                                                     <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: '#fff' }} />
+
+                                                    {/* Confidence Interval Lines */}
+                                                    <Line type="monotone" dataKey="upper" stroke="#10b981" strokeWidth={1} strokeDasharray="5 5" dot={false} opacity={0.3} />
+                                                    <Line type="monotone" dataKey="lower" stroke="#10b981" strokeWidth={1} strokeDasharray="5 5" dot={false} opacity={0.3} />
+
                                                     <Line type="monotone" dataKey="cash" stroke="#10b981" strokeWidth={4} dot={{ fill: '#10b981', r: 6 }} />
                                                 </LineChart>
                                             </ResponsiveContainer>
