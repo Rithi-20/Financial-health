@@ -621,49 +621,113 @@ async def download_report(
         width, height = letter
 
         # Header
+        p.setFont("Helvetica-Bold", 26)
+        p.setFillColorRGB(0.06, 0.45, 0.35) # Emerald Green
+        p.drawString(50, height - 70, "Financial Health Summary")
+        
+        p.setFont("Helvetica-Bold", 14)
+        p.setFillColorRGB(0.2, 0.2, 0.2)
+        p.drawString(50, height - 95, f"Company: {company.legal_name if company else 'Valued Partner'}")
+        
+        p.setFont("Helvetica", 10)
+        p.setFillColorRGB(0.5, 0.5, 0.5)
+        p.drawString(50, height - 110, f"Analysis Date: 2025-02-04 | User: {user.full_name}")
+        p.setStrokeColorRGB(0.8, 0.8, 0.8)
+        p.line(50, height - 120, width - 50, height - 120)
+
+        # 1. Overall Health
+        p.setFont("Helvetica-Bold", 18)
+        p.setFillColorRGB(0.1, 0.1, 0.1)
+        p.drawString(50, height - 160, "1. Overall Business Safety")
+        
+        # Health Score Box
+        score = metrics['health_score']['value']
+        score_label = metrics['health_score']['label']
+        p.setStrokeColorRGB(0.9, 0.9, 0.9)
+        p.setFillColorRGB(0.95, 0.98, 0.96)
+        p.roundRect(50, height - 230, 200, 50, 10, fill=1)
+        
         p.setFont("Helvetica-Bold", 24)
-        p.setStrokeColorRGB(0.2, 0.4, 0.6)
-        p.drawString(50, height - 80, f"Financial Health Report: {company.legal_name if company else 'Analysis'}")
+        p.setFillColorRGB(0.06, 0.45, 0.35)
+        p.drawString(70, height - 215, f"{score}/100")
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(160, height - 212, f"[{score_label}]")
         
-        p.setFont("Helvetica", 12)
-        p.drawString(50, height - 100, f"Generated for: {user.full_name if user else 'Client'}")
-        p.line(50, height - 110, width - 50, height - 110)
-
-        # Health Score
-        p.setFont("Helvetica-Bold", 16)
-        p.drawString(50, height - 150, "1. Overall Business Health")
-        p.setFont("Helvetica", 12)
-        p.drawString(70, height - 175, f"Health Score: {metrics['health_score']['value']}/100 ({metrics['health_score']['label']})")
-        
-        # Key Metrics
-        p.setFont("Helvetica-Bold", 16)
-        p.drawString(50, height - 210, "2. Key Financial Indicators")
-        p.setFont("Helvetica", 12)
-        p.drawString(70, height - 235, f"Financial Stability: {metrics['ratios']['z_score']}")
-        p.drawString(70, height - 255, f"Cash Coverage: {metrics['ratios']['dscr']}")
-        p.drawString(70, height - 275, f"Profit Margin: {int(metrics['ratios']['net_margin'] * 100)}%")
-
-        # Insights
-        p.setFont("Helvetica-Bold", 16)
-        p.drawString(50, height - 310, "3. AI Business Insights")
-        y_pos = height - 335
         p.setFont("Helvetica", 11)
-        for insight in metrics['insights']:
-            p.drawString(70, y_pos, f"• {insight}")
-            y_pos -= 20
+        p.setFillColorRGB(0.3, 0.3, 0.3)
+        desc = "Your business is currently in a safe and stable financial position." if score > 70 else "Your business shows some areas of risk that need attention."
+        p.drawString(270, height - 200, desc)
+
+        # 2. Simplified Financial Indicators
+        y_pos = height - 270
+        p.setFont("Helvetica-Bold", 18)
+        p.setFillColorRGB(0.1, 0.1, 0.1)
+        p.drawString(50, y_pos, "2. Key Performance Indicators")
+        
+        metrics_data = [
+            ("Business Safety (Solvency)", f"{metrics['ratios']['z_score']}", "Is your business safe from closing?"),
+            ("Debt Power (Repayment)", f"{metrics['ratios']['dscr']}", "Can you easily pay back loans?"),
+            ("Take-Home (Net Margin)", f"{int(metrics['ratios']['net_margin'] * 100)}%", "Money left after all expenses.")
+        ]
+        
+        y_pos -= 40
+        for title, val, sub in metrics_data:
+            p.setFont("Helvetica-Bold", 12)
+            p.setFillColorRGB(0.2, 0.2, 0.2)
+            p.drawString(70, y_pos, title)
+            
+            p.setFont("Helvetica-Bold", 14)
+            p.setFillColorRGB(0.06, 0.45, 0.35)
+            p.drawRightString(width - 70, y_pos, val)
+            
+            p.setFont("Helvetica-Oblique", 9)
+            p.setFillColorRGB(0.5, 0.5, 0.5)
+            p.drawString(70, y_pos - 12, sub)
+            y_pos -= 40
+
+        # 3. AI Insights
+        y_pos -= 30
+        p.setFont("Helvetica-Bold", 18)
+        p.setFillColorRGB(0.1, 0.1, 0.1)
+        p.drawString(50, y_pos, "3. AI Business Advice")
+        
+        y_pos -= 30
+        p.setFont("Helvetica", 11)
+        p.setFillColorRGB(0.2, 0.2, 0.2)
+        for insight in metrics['insights'][:5]: # Show top 5
+            p.drawString(70, y_pos, f"> {insight}")
+            y_pos -= 25
+
+        # 4. Cash Flow Pulse
+        y_pos -= 30
+        p.setFont("Helvetica-Bold", 18)
+        p.setFillColorRGB(0.1, 0.1, 0.1)
+        p.drawString(50, y_pos, "4. Cash Flow Pulse")
+        
+        y_pos -= 30
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(70, y_pos, f"Monthly Surplus: Rs. {metrics['cash_flow']['net']:,}")
+        y_pos -= 20
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(70, y_pos, f"Survival Clock: {metrics['cash_flow']['survival_months']} Months")
+        p.setFont("Helvetica", 10)
+        p.drawString(70, y_pos - 15, "How long you can survive if revenue stops today.")
 
         # Footer
-        p.setFont("Helvetica-Oblique", 10)
-        p.drawString(50, 50, "Confidential - Financial Health AI Analysis Engine")
+        p.setFont("Helvetica-Oblique", 9)
+        p.setFillColorRGB(0.6, 0.6, 0.6)
+        p.drawString(50, 40, "Generated by Financial Health AI Engine - Confidential and Secure")
+        p.drawRightString(width - 50, 40, "Page 1 of 1")
         
         p.showPage()
         p.save()
         
         buffer.seek(0)
+        filename = f"Financial_Report_{company.legal_name.replace(' ', '_') if company else 'SME'}.pdf"
         return StreamingResponse(
             buffer, 
             media_type="application/pdf", 
-            headers={"Content-Disposition": f"attachment; filename=Financial_Report_{company.legal_name if company else 'SME'}.pdf"}
+            headers={"Content-Disposition": f"attachment; filename={filename}"}
         )
     except Exception as e:
         import traceback
